@@ -42,3 +42,65 @@
 
 - PostgreSQL 对象-关系数据库服务器，BSD-许可证。
 
+## Chapter 6 Session
+
+- cookie 以及 session 服务器使用一种类似于 hash table 的结构来保存信息，每个网站都将被分配一个唯一的 sessionID
+
+- 两者都用来客服 http 协议无状态的缺陷
+
+- cookie 是本地计算机保存一些用户操作的历史信息，并在用户再次访问该站点时，
+
+    - 浏览器通过 HTTP 协议将本地 cookie 内容发送给服务器
+    
+    - cookie 生命周期分为两种：会话 cookie 以及持久 cookie
+
+- session 是在服务器保存用户操作的历史信息，服务器用 session id 来标识 session。
+
+## 6.2 使用
+
+- session 基本原理是由服务器为每个会话维护一份信息数据，客户端和服务端依靠一个全局唯一的标识来访问这份数据
+
+- 发送 session 标识符: cookie 和 URL 重写 
+
+- Cookie 服务端通过设置 set-cookie 头将 session 标识符传送到客户端，好组合每次请求都会带上
+
+- URL 重写 返回给用户的页面里所有 URL 后面追加 session 标识符
+
+# Chapter 7 文本处理
+
+## XML 
+- xml Unmarshal 函数来解析
+
+- 同时，我们定义 struct tag 来辅助反射。首先读取 struct tag，如果没有，将读取对应的字段名
+
+- 解析的时候，tag，字段名，XML 元素都是大小写敏感的。需要一一对应
+
+```go
+// 因为 struct 和 XML 有类似的树接口特征，所以我们定义类似的 struct 类型，然后将数据解析成 struct 对应的对象
+func Unmarshal(data []byte, v interface{}) error
+```
+
+- XML 提供 Marshal 和 MarshalIndent 两个函数来生成 XML 文件
+
+## Json
+
+- json 格式，使用的函数名字与 xml 的类似
+
+- 同时，寻找策略首先找可导出的 struct 字段，之后找符合字段名的导出字段，最后找大小写不敏感的导出字段
+
+- 这里寻找字段的策略使得 JSON 解析的时候只会解析能找得到的字段，找不到的字段会被忽略
+
+- JSON 包存储 JSON 对象的格式 
+
+- 下面的格式配合断言就可以访问未知格式的 JSON 文件内容
+
+- [一个推荐的库](https://github.com/bitly/go-simplejson)
+
+```go
+map[string]interface{}
+```
+
+- 需要注意，之后 struct 中的导出类型才会被输出，需要小写的字段名则用 struct tag 来实现
+
+- "-" "omitempty" ",string" 等 struct tag 的含义
+
