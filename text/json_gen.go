@@ -2,12 +2,14 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
+	"os"
 )
 
 type Server struct {
-	ServerName string `json:"serverName"`
-	ServerIP   string `json:"serverIP"`
+	ID          int    `json:"-"`
+	ServerName  string `json:"serverName"`
+	ServerName2 string `json:"serverName2,string"`
+	ServerIP    string `json:"serverIP,omitempty"`
 }
 
 type Serverslice struct {
@@ -15,12 +17,12 @@ type Serverslice struct {
 }
 
 func main() {
-	var s Serverslice
-	s.Servers = append(s.Servers, Server{ServerName: "Shanghai_VPN", ServerIP: "127.0.0.1"})
-	s.Servers = append(s.Servers, Server{ServerName: "Beijing_VPN", ServerIP: "127.0.0.2"})
-	b, err := json.Marshal(s)
-	if err != nil {
-		fmt.Println("json err: ", err)
+	s := Server{
+		ID:          3,
+		ServerName:  `Go "1.0"`,
+		ServerName2: `Go "1.0"`,
+		ServerIP:    ``,
 	}
-	fmt.Println(string(b))
+	b, _ := json.Marshal(s)
+	os.Stdout.Write(b)
 }
