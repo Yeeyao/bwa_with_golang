@@ -2,6 +2,8 @@
 
 - 这里内容有点像 Unknown 的教程
 
+- 当然，这里对相关的概念解释得更加清楚
+
 ## Chapter 3
 
 ### Go http 有两个核心的功能：Conn ServeMux
@@ -104,3 +106,32 @@ map[string]interface{}
 
 - "-" "omitempty" ",string" 等 struct tag 的含义
 
+## 正则表达式
+
+- regexp 包。Go 实现 RE2 标准
+
+- 可以用 strings 包则尽量使用它
+
+- Match MatchReader MatchString 仅仅是后面的参数不同 
+
+- Compile 会解析正则表达式是否合法，如果合法，则会返回一个 Regexp，之后可以用它在任意字符串上执行操作
+
+- 搜索函数以及 Expand 实现命令行的例子
+
+## 模板处理
+
+- MVC 设计模式 Model 处理数据，View 展现结果，Controller 控制用户的请求
+
+- Go 语言中 {{}} 里面的都是 pipelines
+
+- 模板变量 可以在 with range if 中声明局部变量，作用域在 {{end}} 前
+
+- 模板函数 
+
+```go
+// 这里通过一个唯一的名字与对应的 Go 函数关联
+// 需要在 parse 前就将函数注入
+type FuncMap map[string]interface{}
+```
+
+- Must 函数检测模板是否正确
