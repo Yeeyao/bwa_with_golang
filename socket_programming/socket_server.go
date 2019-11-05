@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	service := ":7777"
+	service := ":1200"
 	tcpAddr, err := net.ResolveTCPAddr("tcp4", service)
 	checkError(err)
 	listener, err := net.ListenTCP("tcp", tcpAddr)
@@ -17,10 +17,14 @@ func main() {
 		if err != nil {
 			continue
 		}
-		daytime := time.Now().String()
-		conn.Write([]byte(daytime))
-		conn.Close()
+		go handleClient(conn)
 	}
+}
+
+func handleClient(conn net.Conn) {
+	defer conn.Close()
+	daytime := time.Now().String()
+	conn.Write([]byte(daytime))
 }
 
 func checkError(err error) {
