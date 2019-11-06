@@ -4,6 +4,14 @@
 
 - 当然，这里对相关的概念解释得更加清楚
 
+- 纯 Go 代码可以使用 delve 来调试
+
+- 压力测试 需要使用命令 go test -test.bench=".*" "" 内部表示需要运行的压力测试函数
+
+- gotest package 来测试
+
+- 后面的部分没有特别详细阅读
+
 ## Chapter 3
 
 ### Go http 有两个核心的功能：Conn ServeMux
@@ -139,3 +147,51 @@ type FuncMap map[string]interface{}
 ## 小结
 
 - 文本处理工具的介绍，XML、JSON、正则表达式以及模板。前两个是数据交互工具，正则表达式可以处理文本，模板可以展现数据
+
+# Chapter8 Socket 编程
+
+## Socket 
+
+### TCP Socket
+
+- net package 有一个类型 TCPConn 作为客户端和服务器交互通道
+
+- net package 中 DialTCP 函数建立一个 TCP 连接，返回一个 TCPConn 类型的对象，客户端和服务器都拥有 TCPConn 对象来进行数据交换
+
+```go
+// 建立连接
+func DialTCP(net string, laddr, raddr *TCPAddr) (c *TCPConn, err os.Error)
+
+// 设置超时
+func DialTimeout(net, addr string, timeout time.Duration) (Conn, error)
+
+// 定时发送包，类似心跳包功能
+func (c *TCPConn) SetKeepAlive(keepalive bool) os.Error
+```
+
+### UDP Socket
+
+## WebSocket
+
+- 采用了特殊的包头，使得浏览器和服务器只需要做一个握手动作，就可以在两者之间建立一条连接通道
+
+## REST
+
+- Resources Representation State Transfer
+
+### RESTful 架构 
+
+- 每个 URL 代表一种资源
+
+- 客户端和服务器间，传递这种资源的某种表现层
+
+- 客户端通过四个 HTTP 动词，对服务器字段进行操作，实现表现层状态转化
+
+- Web 应用要满足 REST 最重要的原则是:客户端和服务器之间的交互在请求之间是无状态的,即从客户端到服务器的每个请求都必须包含理解请求所必需的信息。
+
+- 另一个 REST 原则是系统分层。
+
+## RPC
+
+- GO 支持三种级别的 PRC：TCP HTTP JSONPRC
+
