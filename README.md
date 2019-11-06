@@ -12,6 +12,8 @@
 
 - 后面的部分没有特别详细阅读
 
+- 日志 seelog logrus
+
 ## Chapter 3
 
 ### Go http 有两个核心的功能：Conn ServeMux
